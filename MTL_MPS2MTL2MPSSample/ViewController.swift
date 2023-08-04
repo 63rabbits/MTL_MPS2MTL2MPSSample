@@ -123,10 +123,12 @@ class ViewController: UIViewController, MTKViewDelegate {
         guard let commandBuffer = commandQueue.makeCommandBuffer() else {fatalError()}
 
         // render pass #1
+        var grayWeight: [Float] = [0.299, 0.587, 0.114]
         let binary = MPSImageThresholdBinary(device: device,
                                              thresholdValue: 0.2,
                                              maximumValue: 1.0,
-                                             linearGrayColorTransform: nil)
+//                                             linearGrayColorTransform: nil)
+                                             linearGrayColorTransform: &grayWeight)
         binary.encode(commandBuffer: commandBuffer,
                       sourceTexture: texture,
                       destinationTexture: midTexture01)
